@@ -2,9 +2,10 @@ package hu.tanit.kds.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,19 +13,16 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderId;
+    private Long categoryId;
 
-    private String status;
+    private String name;
 
-    private Integer tableNumb;
-
-    private LocalDateTime timeStamo;
+    private String description;
 
     @JsonIgnore
     @OneToMany
-    private List<OrderItem> orderItems  = new ArrayList<>();
-
+    private List<OrderItem> orderItems = new ArrayList<>();
 }
