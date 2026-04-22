@@ -1,8 +1,8 @@
 package hu.tanit.kds.controllers;
 
 import hu.tanit.kds.models.Product;
-import hu.tanit.kds.repos.ProductRepository;
-import org.springframework.http.ResponseEntity;
+import hu.tanit.kds.services.ProductService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,55 +11,46 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductController {
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
-    public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping
     public List<Product> getAll() {
-        return productRepository.findAll();
+        return productService.getAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getById(@PathVariable Long id) {
-        return productRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public Product getById(@PathVariable Long id) {
+        return productService.getById(id);
     }
 
     @GetMapping("/category/{categoryId}")
     public List<Product> getByCategory(@PathVariable Long categoryId) {
-        return productRepository.findByCategoryCategoryId(categoryId);
+        return productService.getByCategory(categoryId);
     }
 
     @GetMapping("/available")
     public List<Product> getAvailable() {
-        return productRepository.findByAvailable(true);
+        return productService.getAvailable();
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Product create(@RequestBody Product product) {
-        return productRepository.save(product);
+        return productService.create(product);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody Product updated) {
-        return productRepository.findById(id).map(p -> {
-            p.setName(updated.getName());
-            p.setDescription(updated.getDescription());
-            p.setPrice(updated.getPrice());
-            p.setAvailable(updated.getAvailable());
-            p.setCategory(updated.getCategory());
-            return ResponseEntity.ok(productRepository.save(p));
-        }).orElse(ResponseEntity.notFound().build());
+    public Product update(@PathVariable Long id, @RequestBody Product product) {
+        return productService.update(id, product);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (!productRepository.existsById(id)) return ResponseEntity.notFound().build();
-        productRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        productService.delete(id);
     }
 }

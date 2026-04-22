@@ -2,8 +2,8 @@ package hu.tanit.kds.controllers;
 
 import hu.tanit.kds.dto.UserDTO;
 import hu.tanit.kds.models.User;
-import hu.tanit.kds.repos.UserRepository;
-import org.springframework.http.ResponseEntity;
+import hu.tanit.kds.services.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,57 +12,41 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public List<UserDTO> getAll() {
-        return userRepository.findAll().stream().map(this::toDTO).toList();
+        return userService.getAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getById(@PathVariable Long id) {
-        return userRepository.findById(id)
-                .map(u -> ResponseEntity.ok(toDTO(u)))
-                .orElse(ResponseEntity.notFound().build());
+    public UserDTO getById(@PathVariable Long id) {
+        return userService.getById(id);
     }
 
     @GetMapping("/username/{username}")
-    public ResponseEntity<UserDTO> getByUsername(@PathVariable String username) {
-        return userRepository.findByUsername(username)
-                .map(u -> ResponseEntity.ok(toDTO(u)))
-                .orElse(ResponseEntity.notFound().build());
+    public UserDTO getByUsername(@PathVariable String username) {
+        return userService.getByUsername(username);
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public UserDTO create(@RequestBody User user) {
-        return toDTO(userRepository.save(user));
+        return userService.create(user);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody User updated) {
-        return userRepository.findById(id).map(u -> {
-            u.setUsername(updated.getUsername());
-            u.setName(updated.getName());
-            u.setRole(updated.getRole());
-            if (updated.getPassword() != null && !updated.getPassword().isBlank()) {
-                u.setPassword(updated.getPassword());
-            }
-            return ResponseEntity.ok(toDTO(userRepository.save(u)));
-        }).orElse(ResponseEntity.notFound().build());
+    public UserDTO update(@PathVariable Long id, @RequestBody User user) {
+        return userService.update(id, user);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (!userRepository.existsById(id)) return ResponseEntity.notFound().build();
-        userRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    private UserDTO toDTO(User u) {
-        return new UserDTO(u.getUserId(), u.getUsername(), u.getName(), u.getRole());
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        userService.delete(id);
     }
 }

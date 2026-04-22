@@ -1,8 +1,8 @@
 package hu.tanit.kds.controllers;
 
 import hu.tanit.kds.models.Category;
-import hu.tanit.kds.repos.CategoryRepository;
-import org.springframework.http.ResponseEntity;
+import hu.tanit.kds.services.CategoryService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,42 +11,36 @@ import java.util.List;
 @RequestMapping("/api/categories")
 public class CategoryController {
 
-    private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
 
-    public CategoryController(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
     }
 
     @GetMapping
     public List<Category> getAll() {
-        return categoryRepository.findAll();
+        return categoryService.getAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getById(@PathVariable Long id) {
-        return categoryRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public Category getById(@PathVariable Long id) {
+        return categoryService.getById(id);
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Category create(@RequestBody Category category) {
-        return categoryRepository.save(category);
+        return categoryService.create(category);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Category> update(@PathVariable Long id, @RequestBody Category updated) {
-        return categoryRepository.findById(id).map(cat -> {
-            cat.setName(updated.getName());
-            cat.setDescription(updated.getDescription());
-            return ResponseEntity.ok(categoryRepository.save(cat));
-        }).orElse(ResponseEntity.notFound().build());
+    public Category update(@PathVariable Long id, @RequestBody Category category) {
+        return categoryService.update(id, category);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (!categoryRepository.existsById(id)) return ResponseEntity.notFound().build();
-        categoryRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        categoryService.delete(id);
     }
 }
