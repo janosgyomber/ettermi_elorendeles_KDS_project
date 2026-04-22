@@ -1,8 +1,8 @@
 package hu.tanit.kds.controllers;
 
 import hu.tanit.kds.models.OrderItem;
-import hu.tanit.kds.repos.OrderItemRepository;
-import org.springframework.http.ResponseEntity;
+import hu.tanit.kds.services.OrderItemService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,53 +11,41 @@ import java.util.List;
 @RequestMapping("/api/order-items")
 public class OrderItemController {
 
-    private final OrderItemRepository orderItemRepository;
+    private final OrderItemService orderItemService;
 
-    public OrderItemController(OrderItemRepository orderItemRepository) {
-        this.orderItemRepository = orderItemRepository;
+    public OrderItemController(OrderItemService orderItemService) {
+        this.orderItemService = orderItemService;
     }
 
     @GetMapping
     public List<OrderItem> getAll() {
-        return orderItemRepository.findAll();
+        return orderItemService.getAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderItem> getById(@PathVariable Long id) {
-        return orderItemRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public OrderItem getById(@PathVariable Long id) {
+        return orderItemService.getById(id);
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public OrderItem create(@RequestBody OrderItem orderItem) {
-        return orderItemRepository.save(orderItem);
+        return orderItemService.create(orderItem);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrderItem> update(@PathVariable Long id, @RequestBody OrderItem updated) {
-        return orderItemRepository.findById(id).map(item -> {
-            item.setQuantity(updated.getQuantity());
-            item.setComment(updated.getComment());
-            item.setItemStatus(updated.getItemStatus());
-            item.setProduct(updated.getProduct());
-            item.setOrder(updated.getOrder());
-            return ResponseEntity.ok(orderItemRepository.save(item));
-        }).orElse(ResponseEntity.notFound().build());
+    public OrderItem update(@PathVariable Long id, @RequestBody OrderItem orderItem) {
+        return orderItemService.update(id, orderItem);
     }
 
     @PatchMapping("/{id}/status")
-    public ResponseEntity<OrderItem> updateStatus(@PathVariable Long id, @RequestParam String status) {
-        return orderItemRepository.findById(id).map(item -> {
-            item.setItemStatus(status);
-            return ResponseEntity.ok(orderItemRepository.save(item));
-        }).orElse(ResponseEntity.notFound().build());
+    public OrderItem updateStatus(@PathVariable Long id, @RequestParam String status) {
+        return orderItemService.updateStatus(id, status);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (!orderItemRepository.existsById(id)) return ResponseEntity.notFound().build();
-        orderItemRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        orderItemService.delete(id);
     }
 }
