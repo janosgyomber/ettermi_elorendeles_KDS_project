@@ -21,10 +21,16 @@ public class Order {
 
     private Integer tableNumb;
 
-    private LocalDateTime timeStamo;
+    private LocalDateTime timeStamp;
+
+    private Integer fullPrice;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @JsonIgnore
-    @OneToMany
+    @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems  = new ArrayList<>();
 
 }

@@ -23,6 +23,6 @@ public class Category {
     private String description;
 
     @JsonIgnore
-    @OneToMany
-    private List<OrderItem> orderItems = new ArrayList<>();
+    @OneToMany(mappedBy = "category")
+    private List<Product> products = new ArrayList<>();
 }

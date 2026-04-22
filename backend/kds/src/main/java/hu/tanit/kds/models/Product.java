@@ -24,7 +24,11 @@ public class Product {
     private Integer price;
     private Boolean available;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     @JsonIgnore
     @OneToMany
-    private List<Category> categories = new ArrayList<>();
+    private List<OrderItem> orderItems = new ArrayList<>();
 }
