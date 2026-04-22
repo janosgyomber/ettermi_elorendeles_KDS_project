@@ -25,10 +25,10 @@ public class Product {
     private Boolean available;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn
     private Category category;
 
     @JsonIgnore
-    @OneToMany
+    @OneToMany(mappedBy = "product")
     private List<OrderItem> orderItems = new ArrayList<>();
 }

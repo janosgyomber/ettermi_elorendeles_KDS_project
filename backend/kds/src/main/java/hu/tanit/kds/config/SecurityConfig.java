@@ -29,8 +29,7 @@ public class SecurityConfig {
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userService);
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userService);
         provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }
@@ -43,25 +42,25 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                // Felhasználókezelés: csak ADMIN
-                .requestMatchers("/api/users/**").hasRole("ADMIN")
-                // Kategória és termék módosítás: csak ADMIN
-                .requestMatchers(HttpMethod.POST, "/api/categories/**", "/api/products/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/api/categories/**", "/api/products/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/categories/**", "/api/products/**").hasRole("ADMIN")
-                // KDS státuszfrissítés: KITCHEN és ADMIN
-                .requestMatchers(HttpMethod.PATCH, "/api/order-items/*/status").hasAnyRole("KITCHEN", "ADMIN")
-                .requestMatchers(HttpMethod.PATCH, "/api/orders/*/status").hasAnyRole("KITCHEN", "WAITER", "ADMIN")
-                // Rendelés létrehozása/törlése: WAITER és ADMIN
-                .requestMatchers(HttpMethod.POST, "/api/orders/**").hasAnyRole("WAITER", "ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/orders/**").hasAnyRole("WAITER", "ADMIN")
-                // Olvasás: minden belépett felhasználó
-                .anyRequest().authenticated()
-            )
-            .httpBasic(org.springframework.security.config.Customizer.withDefaults());
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+
+                        .requestMatchers("/api/users/**").hasRole("ADMIN")
+
+                        .requestMatchers(HttpMethod.POST, "/api/categories/**", "/api/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/categories/**", "/api/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/categories/**", "/api/products/**").hasRole("ADMIN")
+
+                        .requestMatchers(HttpMethod.PATCH, "/api/order-items/*/status").hasAnyRole("KITCHEN", "ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/orders/*/status").hasAnyRole("KITCHEN", "WAITER", "ADMIN")
+
+                        .requestMatchers(HttpMethod.POST, "/api/orders/**").hasAnyRole("WAITER", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/orders/**").hasAnyRole("WAITER", "ADMIN")
+
+                        .anyRequest().authenticated()
+                )
+                .httpBasic(org.springframework.security.config.Customizer.withDefaults());
 
         return http.build();
     }

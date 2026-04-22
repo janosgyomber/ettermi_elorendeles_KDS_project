@@ -21,10 +21,10 @@ public class OrderItem {
     private String itemStatus;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "order_id")
+    @JoinColumn
     private Order order;
 }

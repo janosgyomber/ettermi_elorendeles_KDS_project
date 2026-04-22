@@ -26,7 +26,7 @@ public class Order {
     private Integer fullPrice;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn
     private User user;
 
     @JsonIgnore
