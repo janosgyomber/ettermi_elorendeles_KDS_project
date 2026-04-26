@@ -1,5 +1,7 @@
 package hu.tanit.kds.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,5 +28,6 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Order order;
 }

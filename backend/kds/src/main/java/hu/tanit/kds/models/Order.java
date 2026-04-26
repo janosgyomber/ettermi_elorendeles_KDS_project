@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "orders")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,19 +19,14 @@ public class Order {
     private Long orderId;
 
     private String status;
-
     private Integer tableNumb;
-
     private LocalDateTime timeStamp;
-
     private Integer fullPrice;
 
     @ManyToOne
     @JoinColumn
     private User user;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "order")
-    private List<OrderItem> orderItems  = new ArrayList<>();
-
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> orderItems = new ArrayList<>();
 }

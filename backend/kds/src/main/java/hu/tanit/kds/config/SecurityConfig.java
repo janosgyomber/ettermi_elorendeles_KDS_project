@@ -44,16 +44,21 @@ public class SecurityConfig {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/users/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/categories/**", "/api/products/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/categories/**", "/api/products/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/categories/**", "/api/products/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/categories/**", "/api/products/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PATCH, "/api/order-items/*/status").hasAnyRole("KITCHEN", "ADMIN")
                         .requestMatchers(HttpMethod.PATCH, "/api/orders/*/status").hasAnyRole("KITCHEN", "WAITER", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/orders/**").hasAnyRole("WAITER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/orders/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/orders").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/order-items").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/orders/**").hasAnyRole("WAITER", "ADMIN")
                         .anyRequest().authenticated()
                 )
-                .httpBasic(org.springframework.security.config.Customizer.withDefaults());
+                .httpBasic(basic -> basic.authenticationEntryPoint((request, response, authException) -> {
+                    response.sendError(401, "Unauthorized");
+                }));
 
         return http.build();
     }
