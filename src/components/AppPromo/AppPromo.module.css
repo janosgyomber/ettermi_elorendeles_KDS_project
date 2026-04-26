@@ -1,0 +1,102 @@
+.appPromoSection {
+  padding: 80px 0;
+  background-color: var(--light-bg);
+}
+
+.promoWrapper {
+  background-color: var(--primary-yellow);
+  border-radius: 30px;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(251, 188, 4, 0.3);
+}
+
+@media (min-width: 900px) {
+  .promoWrapper {
+    padding: 60px 80px;
+  }
+}
+
+.textContent {
+  color: var(--dark-bg);
+  z-index: 2;
+  position: relative;
+}
+
+.title {
+  font-weight: 900 !important;
+  font-size: 2.2rem !important;
+  margin-bottom: 20px !important;
+  line-height: 1.2 !important;
+}
+
+@media (min-width: 900px) {
+  .title {
+    font-size: 3rem !important;
+  }
+}
+
+.highlight {
+  color: var(--primary-red);
+}
+
+.subtitle {
+  font-size: 1.1rem !important;
+  margin-bottom: 30px !important;
+  font-weight: 600 !important;
+  opacity: 0.9;
+  max-width: 400px;
+}
+
+.badges {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.storeBtn {
+  background-color: var(--dark-bg) !important;
+  color: var(--white) !important;
+  border-radius: 12px !important;
+  padding: 8px 16px !important;
+  text-transform: none !important;
+  min-width: 160px;
+}
+
+.storeBtn:hover {
+  background-color: #000 !important;
+}
+
+.storeBtn svg {
+  font-size: 30px !important;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.phoneMockup {
+  width: 250px;
+  height: 250px;
+  background-color: var(--white);
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+  transform: rotate(10deg);
+  transition: transform 0.5s ease;
+}
+
+.phoneMockup:hover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+.mockupImage {
+  width: 80%;
+  object-fit: contain;
+}

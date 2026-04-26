@@ -1,0 +1,36 @@
+.drawerContainer {
+  width: 400px;
+  max-width: 100vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #fafafa;
+}
+
+.drawerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background-color: #ffffff;
+}
+
+.drawerContent {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 16px;
+  background-color: #fafafa;
+}
+
+.drawerFooter {
+  padding: 24px;
+  background-color: #ffffff;
+  border-top: 1px solid #eeeeee;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.03);
+}
+
+@media (max-width: 600px) {
+  .drawerContainer {
+    width: 100vw;
+  }
+}

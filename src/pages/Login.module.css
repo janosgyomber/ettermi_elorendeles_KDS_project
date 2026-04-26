@@ -1,0 +1,85 @@
+.loginPage {
+  min-height: 80vh;
+  background: linear-gradient(135deg, rgba(233, 0, 0, 0.05), rgba(251, 188, 4, 0.1)), #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.loginCard {
+  padding: 40px;
+  border-radius: 24px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08) !important;
+  background-color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.loginCard:hover {
+  transform: translateY(-5px);
+}
+
+.loginCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, #E90000, #FBBC04);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.backButton {
+  margin-right: 12px !important;
+  color: #555 !important;
+}
+
+.title {
+  font-weight: 800 !important;
+  color: #121212;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 30px !important;
+  padding-left: 52px; /* aligned with title because of back icon */
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.submitButton {
+  margin-top: 24px !important;
+  padding: 14px !important;
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  font-size: 1.1rem !important;
+  background: linear-gradient(90deg, #FBBC04, #e5aa00) !important;
+  color: #121212 !important;
+  text-transform: none !important;
+  box-shadow: 0 8px 20px rgba(251, 188, 4, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+.submitButton:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 25px rgba(251, 188, 4, 0.4) !important;
+}
+
+.submitButton:disabled {
+  background: #e0e0e0 !important;
+  color: #9e9e9e !important;
+  box-shadow: none !important;
+  transform: none;
+}

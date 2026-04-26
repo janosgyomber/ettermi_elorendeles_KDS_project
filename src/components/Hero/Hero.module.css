@@ -1,0 +1,140 @@
+.heroSection {
+  background-color: var(--dark-bg);
+  color: var(--white);
+  padding: 60px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroContainer {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+@media (min-width: 900px) {
+  .heroContainer {
+    flex-direction: row;
+    justify-content: space-between;
+    min-height: 80vh;
+  }
+}
+
+.textContent {
+  flex: 1;
+  z-index: 2;
+  text-align: center;
+}
+
+@media (min-width: 900px) {
+  .textContent {
+    text-align: left;
+    max-width: 50%;
+  }
+}
+
+.title {
+  font-size: 3rem !important;
+  line-height: 1.1 !important;
+  margin-bottom: 24px !important;
+}
+
+@media (min-width: 900px) {
+  .title {
+    font-size: 4.5rem !important;
+  }
+}
+
+.highlight {
+  color: var(--primary-yellow);
+}
+
+.subtitle {
+  font-size: 1.2rem !important;
+  line-height: 1.6 !important;
+  margin-bottom: 32px !important;
+  color: var(--text-light);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 900px) {
+  .subtitle {
+    margin-left: 0;
+  }
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+@media (min-width: 900px) {
+  .buttonGroup {
+    justify-content: flex-start;
+  }
+}
+
+.ctaButton {
+  border-radius: 30px !important;
+  padding: 12px 32px !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  box-shadow: 0 8px 24px rgba(251, 188, 4, 0.4) !important;
+}
+
+.imageContent {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.imageGlow {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(233,0,0,0.4) 0%, rgba(20,20,20,0) 70%);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+@media (min-width: 900px) {
+  .imageGlow {
+    width: 500px;
+    height: 500px;
+  }
+}
+
+.heroImage {
+  width: 100%;
+  max-width: 500px;
+  object-fit: contain;
+  z-index: 1;
+  filter: drop-shadow(0px 20px 30px rgba(0,0,0,0.5));
+  animation: float 6s ease-in-out infinite;
+}
+
+@media (min-width: 900px) {
+  .heroImage {
+    max-width: 650px;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(1deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}

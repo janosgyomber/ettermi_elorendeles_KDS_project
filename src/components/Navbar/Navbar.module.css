@@ -1,0 +1,88 @@
+.appbar {
+  background-color: var(--white) !important;
+  color: var(--text-dark) !important;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0 !important;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.logoImage {
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.brandName {
+  font-weight: 800 !important;
+  font-size: 1.5rem !important;
+  letter-spacing: -0.5px !important;
+  display: none;
+}
+
+@media (min-width: 600px) {
+  .brandName {
+    display: block;
+  }
+}
+
+.linksContainer {
+  display: none;
+  gap: 20px;
+}
+
+@media (min-width: 900px) {
+  .linksContainer {
+    display: flex;
+  }
+}
+
+.navLink {
+  color: var(--text-dark) !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  text-transform: none !important;
+  position: relative;
+}
+
+.navLink:hover {
+  background: transparent !important;
+  color: var(--primary-red) !important;
+}
+
+.actionContainer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.orderButton {
+  border-radius: 30px !important;
+  padding: 8px 24px !important;
+  font-weight: 700 !important;
+  font-size: 1.1rem !important;
+  box-shadow: 0 4px 14px rgba(233, 0, 0, 0.3) !important;
+}
+
+.mobileMenuBtn {
+  display: block !important;
+  color: var(--text-dark) !important;
+}
+
+@media (min-width: 900px) {
+  .mobileMenuBtn {
+    display: none !important;
+  }
+}
