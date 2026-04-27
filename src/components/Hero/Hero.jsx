@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography, Button, Container } from '@mui/material';
 import { ArrowForward as ArrowForwardIcon } from '@mui/icons-material';
 import styles from './Hero.module.css';
-import heroBurger from '../../assets/hero_burger.png';
+import heroBurger from '../../assets/hero_burger.jpg';
 
 const Hero = () => {
   return (

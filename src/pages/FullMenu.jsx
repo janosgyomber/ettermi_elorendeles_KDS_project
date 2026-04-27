@@ -9,8 +9,34 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-import friesImage from '../assets/fries.png';
-import burgerImage from '../assets/hero_burger.png';
+import burger1 from '../assets/burger1.jpg';
+import burger2 from '../assets/burger2.jpg';
+import burger3 from '../assets/burger3.jpg';
+import burger4 from '../assets/burger4.jpg';
+import burger5 from '../assets/burger5.jpg';
+import burger6 from '../assets/burger6.jpg';
+import burger7 from '../assets/burger7.jpg';
+import burger8 from '../assets/burger8.jpg';
+import burger9 from '../assets/burger9.jpg';
+import burger10 from '../assets/burger10.jpg';
+import placeholder from '../assets/placeholder.png';
+
+const imagesByCategory = {
+  [1]: [burger1, burger2, burger3, burger4, burger5,
+           burger6, burger7, burger8, burger9, burger10],
+};
+
+const fallbackImage = placeholder; 
+
+
+const getImageForItem = (item, index) => {
+  const categoryId = item.category.categoryId;
+  const images = imagesByCategory[categoryId];
+  if (images && images.length > 0) {
+    return images[index % images.length];
+  }
+  return fallbackImage;
+};
 
 const FullMenu = () => {
   const [menuItems, setMenuItems] = useState([]);
@@ -55,14 +81,14 @@ const FullMenu = () => {
             }}
             style={{ paddingBottom: '50px', paddingLeft: '10px', paddingRight: '10px' }}
           >
-            {menuItems.map((item) => (
+            {menuItems.map((item, index) => (
               <SwiperSlide key={item.productId || item.id} style={{ height: 'auto' }}>
                 <Card elevation={2} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                   <Box sx={{ p: 2, display: 'flex', justifyContent: 'center' }}>
                     <CardMedia
                       component="img"
                       height="200"
-                      image={item.name.toLowerCase().includes('burger') ? burgerImage : friesImage}
+                      image={getImageForItem(item, index)} 
                       alt={item.name}
                       sx={{ objectFit: 'contain', width: '100%', transition: 'transform 0.3s', '&:hover': { transform: 'scale(1.05)' } }}
                     />
@@ -79,14 +105,14 @@ const FullMenu = () => {
                     </Typography>
                   </CardContent>
                   <CardActions sx={{ p: 2 }}>
-                    <Button 
-                      fullWidth 
-                      variant="contained" 
+                    <Button
+                      fullWidth
+                      variant="contained"
                       startIcon={<LocalMallOutlinedIcon />}
                       disabled={!item.available}
                       onClick={() => addToCart(item, 1)}
-                      sx={{ 
-                        backgroundColor: item.available ? '#FBBC04' : '#ccc', 
+                      sx={{
+                        backgroundColor: item.available ? '#FBBC04' : '#ccc',
                         color: '#121212',
                         '&:hover': {
                           backgroundColor: item.available ? '#e5aa00' : '#ccc'

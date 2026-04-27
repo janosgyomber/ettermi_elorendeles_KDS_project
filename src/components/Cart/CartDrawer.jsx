@@ -52,6 +52,7 @@ const CartDrawer = () => {
 
       if (!orderResponse.ok) throw new Error('Hiba a rendelésnél.');
       const order = await orderResponse.json();
+      console.log(order);
 
       // Tételek hozzáadása (ciklusban POST /api/order-items)
       for (const item of cart) {
@@ -66,7 +67,7 @@ const CartDrawer = () => {
             comment: '',
             itemStatus: 'NEW',
             product: { productId: item.product.productId || item.product.id },
-            order: { orderId: order.orderId }
+            order: { orderId: order.orderId || order.order_id }
           })
         });
       }

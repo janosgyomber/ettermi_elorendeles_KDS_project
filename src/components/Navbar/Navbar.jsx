@@ -6,7 +6,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useCart } from '../../contexts/CartContext';
 import CartDrawer from '../Cart/CartDrawer';
 import styles from './Navbar.module.css';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo.jpg';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -29,8 +29,8 @@ const Navbar = () => {
           <Box className={styles.linksContainer}>
             <Button className={styles.navLink} onClick={() => navigate('/menu')}>Étlap</Button>
             <Button className={styles.navLink} onClick={() => navigate('/#ajanlatok')}>Ajánlatok</Button>
-            <Button className={styles.navLink}>Éttermeink</Button>
-            <Button className={styles.navLink}>Rólunk</Button>
+            <Button className={styles.navLink} onClick={() => window.open('https://www.google.com/maps/dir//Mr.+Mon%E2%80%99s+streetfood,+%C3%9Ajfeh%C3%A9rt%C3%B3,+M%C3%A1rt%C3%ADrok+u.+10,+4244/@47.9816506,21.7192701,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x4747676aa3feaa75:0x75680c1182b6d65!2m2!1d21.6842735!2d47.8015174?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D', '_blank')}>Éttermeink</Button>
+            <Button className={styles.navLink} onClick={() => window.open('https://share.google/QbZYRL06PRGv4myi1', '_blank')}>Rólunk</Button>
           </Box>
 
           {/* Action Buttons */}

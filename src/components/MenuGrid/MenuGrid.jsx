@@ -1,13 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Box, Grid, Card, CardMedia, CardContent, CardActions, Button, CircularProgress } from '@mui/material';
+import { Container, Typography, Box, Card, CardMedia, CardContent, CardActions, Button, CircularProgress } from '@mui/material';
 import { LocalMallOutlined as LocalMallOutlinedIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../../contexts/CartContext';
 import styles from './MenuGrid.module.css';
 
-// Using the generated images (fries mapped to multiple types for demo purposes, and a placeholder)
-import friesImage from '../../assets/fries.png';
-import burgerImage from '../../assets/hero_burger.png';
+import burger1 from '../../assets/burger1.jpg';
+import burger2 from '../../assets/burger2.jpg';
+import burger3 from '../../assets/burger3.jpg';
+import burger4 from '../../assets/burger4.jpg';
+import burger5 from '../../assets/burger5.jpg';
+import burger6 from '../../assets/burger6.jpg';
+import burger7 from '../../assets/burger7.jpg';
+import burger8 from '../../assets/burger8.jpg';
+import burger9 from '../../assets/burger9.jpg';
+import burger10 from '../../assets/burger10.jpg';
+import sandwich from '../../assets/sandwich.jpg';
+
+const burgers = [
+  burger1,
+  burger2,
+  burger3,
+  burger4,
+  burger5,
+  burger6,
+  burger7,
+  burger8,
+  burger9,
+  burger10
+]
 
 const MenuGrid = () => {
   const [menuItems, setMenuItems] = useState([]);
@@ -34,54 +55,94 @@ const MenuGrid = () => {
         <Typography variant="h2" className={styles.sectionTitle}>
           Legkelendőbb <span className={styles.highlight}>ételeink</span>
         </Typography>
-        
+
         {loading ? (
           <Box display="flex" justifyContent="center" my={4}>
             <CircularProgress />
           </Box>
         ) : (
-          <Grid container spacing={4} className={styles.gridContainer}>
-            {menuItems.map((item) => (
-              <Grid item xs={12} sm={6} md={3} key={item.productId || item.id}>
-                <Card className={styles.menuCard} elevation={2}>
-                  <Box className={styles.imageWrapper}>
-                    <CardMedia
-                      component="img"
-                      height="200"
-                      image={item.name.toLowerCase().includes('burger') ? burgerImage : friesImage}
-                      alt={item.name}
-                      className={styles.cardImage}
-                    />
-                  </Box>
-                  <CardContent className={styles.cardContent}>
-                    <Typography gutterBottom variant="h5" component="div" className={styles.itemTitle}>
-                      {item.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" className={styles.itemDesc}>
-                      {item.description}
-                    </Typography>
-                    <Typography variant="h6" className={styles.itemPrice}>
-                      {item.price} Ft
-                    </Typography>
-                  </CardContent>
-                  <CardActions className={styles.cardActions}>
-                    <Button 
-                      fullWidth 
-                      variant="contained" 
-                      className={styles.addToCartBtn}
-                      startIcon={<LocalMallOutlinedIcon />}
-                      disabled={!item.available}
-                      onClick={() => addToCart(item, 1)}
-                    >
-                      {item.available ? 'Kosárba' : 'Elfogyott'}
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
+          <Box
+            className={styles.gridContainer}
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: '1fr',
+                sm: '1fr 1fr',
+              },
+              gap: 4,
+            }}
+          >
+            {menuItems.slice(0, 8).map((item) => (
+              <Card
+                key={item.productId || item.id}
+                className={styles.menuCard}
+                elevation={2}
+              >
+                <Box className={styles.imageWrapper}>
+                  <CardMedia
+                    component="img"
+                    height="200"
+                    image={item.name.toLowerCase().includes('burger') ? burgers[Math.floor(Math.random() * burgers.length)] : sandwich}
+                    alt={item.name}
+                    className={styles.cardImage}
+                  />
+                </Box>
+
+                <CardContent className={styles.cardContent} sx={{ flexGrow: 1 }}>
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                    className={styles.itemTitle}
+                    sx={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      minHeight: '3.2em',
+                    }}
+                  >
+                    {item.name}
+                  </Typography>
+
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    className={styles.itemDesc}
+                    sx={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      display: '-webkit-box',
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: 'vertical',
+                    }}
+                  >
+                    {item.description}
+                  </Typography>
+
+                  <Typography variant="h6" className={styles.itemPrice} sx={{ mt: 2 }}>
+                    {item.price} Ft
+                  </Typography>
+                </CardContent>
+
+                <CardActions className={styles.cardActions} sx={{ p: 2, pt: 0 }}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    className={styles.addToCartBtn}
+                    startIcon={<LocalMallOutlinedIcon />}
+                    disabled={!item.available}
+                    onClick={() => addToCart(item, 1)}
+                  >
+                    {item.available ? 'Kosárba' : 'Elfogyott'}
+                  </Button>
+                </CardActions>
+              </Card>
             ))}
-          </Grid>
+          </Box>
         )}
-        
+
         <Box className={styles.viewMoreContainer}>
           <Button variant="outlined" className={styles.viewMoreBtn} onClick={() => navigate('/menu')}>
             Teljes Étlap Megtekintése

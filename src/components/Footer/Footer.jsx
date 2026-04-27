@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Container, Grid, Typography, IconButton } from '@mui/material';
 import { Facebook as FacebookIcon, Instagram as InstagramIcon, Twitter as TwitterIcon } from '@mui/icons-material';
 import styles from './Footer.module.css';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo.jpg';
 
 const Footer = () => {
   return (
